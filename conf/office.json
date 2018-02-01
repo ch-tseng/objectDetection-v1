@@ -1,0 +1,42 @@
+{
+    /****
+    * DATASET PATHS
+    ****/
+    "image_dataset": "datasets/images",
+    "image_annotations": "datasets/labels",
+    "image_distractions": "datasets/neg",
+
+    /****
+    * FEATURE EXTRACTION
+    ****/
+    "features_path": "output/cars/car_features.hdf5",
+    "percent_gt_images": 0.5,
+    "offset": 5,
+    "use_flip": true,
+    "num_distraction_images": 500,
+    "num_distractions_per_image": 10,
+
+    /****
+    * HISTOGRAM OF ORIENTED GRADIENTS DESCRIPTOR
+    ****/
+    "orientations": 9,
+    "pixels_per_cell": [4, 4],
+    "cells_per_block": [2, 2],
+    "normalize": true,
+
+    /****
+    * OBJECT DETECTOR
+    ****/
+    "window_step": 6,
+    "overlap_thresh": 0.3,
+    "pyramid_scale": 0.5,
+    "window_dim": [48, 48],
+    "min_probability": 0.7,
+    "stepSize",
+
+    /****
+    * LINEAR SVM
+    ****/
+    "classifier_path": "misOffice-yaml-model.h5",
+    "C": 0.01
+}
