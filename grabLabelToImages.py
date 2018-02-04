@@ -21,6 +21,8 @@ for filename in os.listdir(args["folder"]+"/labels"):
     for (labelname, xmin, ymin, xmax, ymax, img) in ds.getLabelImg(filename, assignName=args["label"]):
         print(labelname, xmin, ymin, xmax, ymax)
         print("WRITE:", args["distinct"] + "/label-"+str(i)+".jpg")
-        cv2.imwrite(args["distinct"] + "/label-"+str(i)+".jpg", img)
-        i += 1
+        if(os.path.isdir(args["distinct"]+"/"+labelname)==False):
+            os.makedirs(args["distinct"]+"/"+labelname)
 
+        cv2.imwrite(args["distinct"] +"/"+labelname + "/label-"+str(i)+".jpg", img)
+        i += 1
