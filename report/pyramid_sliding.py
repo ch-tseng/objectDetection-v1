@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#python test-slidingwindow.py -c conf/office.json -i datasets/labelimages-1600/images/csi_1600x1600_20180124_130411.jpg
+#python pyramid_sliding.py -i testImages/office-500.jpg -m 120 -n 120 -r 0.75 -s 12 -w 75 -t 75
 
 import time
 import cv2
@@ -56,6 +56,7 @@ for layer in pyramid(image, scale=args["scaleRatio"], minSize=(args["minwidth"],
         clone = layer.copy()
         cv2.rectangle(clone, (x, y), (x + winW, y + winH), (0, 255, 0), 2)
         cv2.imshow("Window", clone)
+        cv2.imshow("Part", window)
  
         # normally we would leave out this line, but let's pause execution
         # of our script so we can visualize the window
