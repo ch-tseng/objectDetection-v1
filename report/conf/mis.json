@@ -7,5 +7,11 @@
     "resizeScale": 0.75,
     "windowWidth": 75,
     "windowHeight": 75,
-    "windowMovePixels": 12
+    "windowMovePixels": 12,
+    /****
+    * Explore window size for labels
+    ****/
+    "imageDB": "datasets/images",
+    "labelDB": "datasets/labels"
+
 }
