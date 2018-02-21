@@ -3,23 +3,18 @@
 
 import time
 import cv2
+from libOB.conf import Conf
 import argparse
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=True, help="目標圖片的path")
-ap.add_argument("-m", "--minwidth", type=int, help="影像金字塔最小的圖片寬度.")
-ap.add_argument("-n", "--minheight", type=int, help="影像金字塔最小的圖片高度")
-ap.add_argument("-r", "--scaleRatio", type=float, default=0.5, help="每次的縮小比例")
-ap.add_argument("-s", "--stepSize", type=int, required=True, help="Sliding window每次移動的距離pixels")
-ap.add_argument("-w", "--width", type=int, required=True, help="Sliding window的寬度")
-ap.add_argument("-t", "--height", type=int, required=True, help=" Sliding window的高度")
+ap.add_argument("-c", "--conf", required=True, help="path to the configuration file")
 args = vars(ap.parse_args())
 
-winW = args["width"]
-winH = args["height"]
+conf = Conf(args["conf"])
+winW = conf["windowWidth"]
+winH = conf["windowHeight"]
 
-
-# load the input image and unpack the command line arguments
 image = cv2.imread(args["image"])
 
 def pyramid(image, scale=0.5, minSize=(30, 30)):
@@ -41,24 +36,18 @@ def sliding_window(image, stepSize, windowSize):
 
 
 # loop over the image pyramid
-for layer in pyramid(image, scale=args["scaleRatio"], minSize=(args["minwidth"], args["minheight"])):
+for layer in pyramid(image, scale=conf["resizeScale"], minSize=(conf["minWidthStop"], conf["minHeightStop"])):
     print(layer.shape)
     # loop over the sliding window for each layer of the pyramid
-    for (x, y, window) in sliding_window(layer, stepSize=args["stepSize"], windowSize=(winW, winH)):
+    for (x, y, window) in sliding_window(layer, stepSize=conf["windowMovePixels"], windowSize=(winW, winH)):
         # if the current window does not meet our desired window size, ignore it
         if window.shape[0] != winH or window.shape[1] != winW:
             continue
  
-        # THIS IS WHERE WE WOULD PROCESS THE WINDOW, EXTRACT HOG FEATURES, AND
-        # APPLY A MACHINE LEARNING CLASSIFIER TO PERFORM OBJECT DETECTION
- 
-        # since we do not have a classifier yet, let's just draw the window
         clone = layer.copy()
         cv2.rectangle(clone, (x, y), (x + winW, y + winH), (0, 255, 0), 2)
         cv2.imshow("Window", clone)
         cv2.imshow("Part", window)
  
-        # normally we would leave out this line, but let's pause execution
-        # of our script so we can visualize the window
         cv2.waitKey(1)
         time.sleep(0.025)

@@ -1,0 +1,11 @@
+{
+    /****
+    * Pyramids & Sliding window
+    ****/
+    "minWidthStop": 120,
+    "minHeightStop": 120,
+    "resizeScale": 0.75,
+    "windowWidth": 75,
+    "windowHeight": 75,
+    "windowMovePixels": 12
+}
